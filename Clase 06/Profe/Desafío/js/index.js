@@ -30,3 +30,5 @@ console.log(includesText('pa', 'Patricia')) // Deberá devolver true
 console.log(includesText('Patricia', 'Pa')) // Deberá devolver false
 
 console.log(includesText(2, 'Pa')) // Deberá devolver false
+
+console.log('Sigo mi programa')
