@@ -99,7 +99,7 @@ $(document).ready(function () {
   //     - Ctrl: 17
   //     - Alt: 18
   //     - Shift: 16
-  $('input').keydown(function (event) {
+  $('window').keydown(function (event) {
     var inputNode = $(this)
 
     switch (event.which) {
