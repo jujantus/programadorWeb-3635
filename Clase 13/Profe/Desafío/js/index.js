@@ -6,19 +6,19 @@ $(document).ready(function () {
   var commentsInputNode = $('#comments')
   var submitButtonNode = $('#submitButton')
 
-  firstNameInputNode.one('blur', validateEmtpyField)
+  firstNameInputNode.one('blur', validateEmptyField)
 
   emailInputNode.one('blur', validateEmailField)
 
-  commentsInputNode.one('blur', validateEmtpyField)
+  commentsInputNode.one('blur', validateEmptyField)
 
   /**
- * validateEmtpyField es una función que el campo tenga un valor
+ * validateEmptyField es una función que el campo tenga un valor
  *
  * @param {HTMLEvent} event
  */
 
-  function validateEmtpyField (event) {
+  function validateEmptyField (event) {
     var inputNode = $(this)
 
     var errorText = ''
@@ -41,7 +41,7 @@ $(document).ready(function () {
     }
 
     if (event.type === 'blur') {
-      inputNode.on('input', validateEmtpyField)
+      inputNode.on('input', validateEmptyField)
     }
 
     validateButton()
