@@ -232,6 +232,54 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _rou
 
 /***/ }),
 
+/***/ "./src/js/controllers/contactController.js":
+/*!*************************************************!*\
+  !*** ./src/js/controllers/contactController.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {function contactController () {\r\n  console.log('contactController successfully loaded')\r\n\r\n  var firstNameInputNode = $('#firstName')\r\n  var emailInputNode = $('#email')\r\n  var commentsInputNode = $('#comments')\r\n  var submitButtonNode = $('#submitButton')\r\n\r\n  firstNameInputNode.one('blur', validateEmptyField)\r\n\r\n  emailInputNode.one('blur', validateEmailField)\r\n\r\n  commentsInputNode.one('blur', validateEmptyField)\r\n\r\n  /**\r\n * validateEmptyField es una función que el campo tenga un valor\r\n *\r\n * @param {HTMLEvent} event\r\n */\r\n\r\n  function validateEmptyField (event) {\r\n    var inputNode = $(this)\r\n\r\n    var errorText = ''\r\n    inputNode.next().remove()\r\n\r\n    if (!inputNode.val()) {\r\n      errorText = 'Campo requerido'\r\n    }\r\n\r\n    if (errorText) {\r\n      inputNode.addClass('is-invalid')\r\n      inputNode.removeClass('is-valid')\r\n\r\n      var parentNode = inputNode.parent()\r\n\r\n      parentNode.append('<div class=\"invalid-feedback\">' + errorText + '</div>')\r\n    } else {\r\n      inputNode.addClass('is-valid')\r\n      inputNode.removeClass('is-invalid')\r\n    }\r\n\r\n    if (event.type === 'blur') {\r\n      inputNode.on('input', validateEmptyField)\r\n    }\r\n\r\n    validateButton()\r\n  }\r\n\r\n  /**\r\n * validateEmailField es una función que valida que el campo sea email\r\n *\r\n * @param {HTMLEvent} event\r\n */\r\n  function validateEmailField (event) {\r\n    var inputNode = $(this)\r\n\r\n    var errorText = ''\r\n\r\n    inputNode.next().remove()\r\n\r\n    var value = inputNode.val()\r\n\r\n    if (!value) {\r\n      errorText = errorText + 'Campo requerido '\r\n    } else {\r\n      if (value.indexOf('@') === -1) {\r\n        errorText = errorText + 'Debe contener arroba (@) '\r\n      }\r\n      if (value.indexOf('.') === -1) {\r\n        errorText = errorText + 'Debe contener punto (.) '\r\n      }\r\n    }\r\n\r\n    if (errorText) {\r\n      inputNode.addClass('is-invalid')\r\n      inputNode.removeClass('is-valid')\r\n\r\n      var parentNode = inputNode.parent()\r\n\r\n      parentNode.append('<div class=\"invalid-feedback\">' + errorText + '</div>')\r\n    } else {\r\n      inputNode.addClass('is-valid')\r\n      inputNode.removeClass('is-invalid')\r\n    }\r\n\r\n    if (event.type === 'blur') {\r\n      inputNode.on('input', validateEmailField)\r\n    }\r\n\r\n    validateButton()\r\n  }\r\n\r\n  /**\r\n * validateButton habilita el botón de submit si existen\r\n * al menos cuatro nodos con la clase is-valid\r\n */\r\n  function validateButton () {\r\n    var validInputNodes = $('.is-valid')\r\n\r\n    if (validInputNodes.length === 3) {\r\n      submitButtonNode.attr('disabled', false)\r\n    } else {\r\n      submitButtonNode.attr('disabled', true)\r\n    }\r\n  }\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (contactController);\r\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/js/controllers/contactController.js?");
+
+/***/ }),
+
+/***/ "./src/js/controllers/homeController.js":
+/*!**********************************************!*\
+  !*** ./src/js/controllers/homeController.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nfunction homeController () {\r\n  console.log('homeController successfully loaded')\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (homeController);\r\n\n\n//# sourceURL=webpack:///./src/js/controllers/homeController.js?");
+
+/***/ }),
+
+/***/ "./src/js/controllers/lsController.js":
+/*!********************************************!*\
+  !*** ./src/js/controllers/lsController.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nfunction lsController () {\r\n  console.log('lsController successfully loaded')\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (lsController);\r\n\n\n//# sourceURL=webpack:///./src/js/controllers/lsController.js?");
+
+/***/ }),
+
+/***/ "./src/js/controllers/peopleController.js":
+/*!************************************************!*\
+  !*** ./src/js/controllers/peopleController.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var _utils_ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/ajax */ \"./src/js/utils/ajax.js\");\n\r\n\r\nfunction peopleController () {\r\n  console.log('peopleController successfully loaded')\r\n\r\n  var tableBodyNode = $('#tableBody')\r\n\r\n  var seeMoreButton = $('#seeMore')\r\n\r\n  Object(_utils_ajax__WEBPACK_IMPORTED_MODULE_0__[\"getData\"])('https://swapi.co/api/people/', showPeople)\r\n\r\n  function showPeople (error, data) {\r\n    if (error) {\r\n    } else {\r\n      var people = data.results\r\n\r\n      var person\r\n\r\n      for (var i = 0; i < people.length; i++) {\r\n        person = people[i]\r\n\r\n        var url = person.url\r\n\r\n        url = url.replace('https://swapi.co/api/people/', '')\r\n\r\n        var id = url.replace('/', '')\r\n\r\n        console.log(id)\r\n\r\n        console.log(person)\r\n\r\n        tableBodyNode.append(\r\n          '<tr id=\"' +\r\n            id +\r\n            '\"><th scope=\"row\">' +\r\n            id +\r\n            '</th><td>' +\r\n            person.name +\r\n            '</td><td>' +\r\n            translate(person.gender) +\r\n            '</td><td>' +\r\n            translate(person.height) +\r\n            ' CM</td><td>' +\r\n            translate(person.mass) +\r\n            ' KG</td> <td>' +\r\n            translate(person.eye_color) +\r\n            '</td> <td> <button type=\"button\" class=\"btn btn-success\">Guardar</button></td> </tr>'\r\n        )\r\n      }\r\n      if (data.next) {\r\n        seeMoreButton.one('click', function () {\r\n          Object(_utils_ajax__WEBPACK_IMPORTED_MODULE_0__[\"getData\"])(data.next, showPeople)\r\n        })\r\n      } else {\r\n        seeMoreButton.remove()\r\n      }\r\n    }\r\n  }\r\n}\r\n\r\nfunction translate (word) {\r\n  switch (word) {\r\n    case 'male':\r\n      return 'Masculino'\r\n      break\r\n    case 'female':\r\n      return 'Femenino'\r\n      break\r\n    case 'blue':\r\n      return 'Azul'\r\n      break\r\n    case 'yellow':\r\n      return 'Amarillo'\r\n      break\r\n    case 'red':\r\n      return 'Rojo'\r\n      break\r\n    case 'brown':\r\n      return 'Marron'\r\n      break\r\n    case 'black':\r\n      return 'Negro'\r\n      break\r\n    case 'orange':\r\n      return 'Naranja'\r\n      break\r\n    case 'hazel':\r\n      return 'Avellana'\r\n      break\r\n    case 'blue-gray':\r\n      return 'Azul-gris'\r\n      break\r\n    case 'hermaphrodite':\r\n      return 'Hermafrodita'\r\n      break\r\n    case 'unknown':\r\n      return '???'\r\n      break\r\n    case 'white':\r\n      return 'Blanco'\r\n      break\r\n    case 'dark':\r\n      return 'Oscuro'\r\n      break\r\n    case 'pink':\r\n      return 'Rosa'\r\n      break\r\n    case 'green, yellow':\r\n      return 'Verde-Amarillo'\r\n      break\r\n    case 'gold':\r\n      return 'Dorado'\r\n      break\r\n    case 'red, blue':\r\n      return 'Rojo-Azul'\r\n      break\r\n    default:\r\n      return word\r\n  }\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (peopleController);\r\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/js/controllers/peopleController.js?");
+
+/***/ }),
+
 /***/ "./src/js/router.js":
 /*!**************************!*\
   !*** ./src/js/router.js ***!
@@ -240,7 +288,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _rou
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var crossroads__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crossroads */ \"./node_modules/crossroads/dist/crossroads.js\");\n/* harmony import */ var crossroads__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(crossroads__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('/', function () {\r\n  $('#root').load('./partials/home.html', function () {\r\n    console.log('Se cargo la home')\r\n  })\r\n})\r\n\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('#/people', function () {\r\n  $('#root').load('./partials/people.html', function () {\r\n    console.log('Se cargo la sección people')\r\n  })\r\n})\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('#/local-storage', function () {\r\n  $('#root').load('./partials/local-storage.html', function () {\r\n    console.log('Se cargo la sección LS')\r\n  })\r\n})\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('#/contact', function () {\r\n  $('#root').load('./partials/contact.html', function () {\r\n    console.log('Se cargo la sección contact')\r\n  })\r\n})\r\n// En cada cambio del # va a verificar las rutas\r\n$(window).on('hashchange', function () {\r\n  crossroads__WEBPACK_IMPORTED_MODULE_0___default.a.parse(window.location.hash)\r\n})\r\n\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.parse(window.location.hash)\r\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/js/router.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var crossroads__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crossroads */ \"./node_modules/crossroads/dist/crossroads.js\");\n/* harmony import */ var crossroads__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(crossroads__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _controllers_homeController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controllers/homeController */ \"./src/js/controllers/homeController.js\");\n/* harmony import */ var _controllers_peopleController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controllers/peopleController */ \"./src/js/controllers/peopleController.js\");\n/* harmony import */ var _controllers_contactController__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./controllers/contactController */ \"./src/js/controllers/contactController.js\");\n/* harmony import */ var _controllers_lsController__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./controllers/lsController */ \"./src/js/controllers/lsController.js\");\n\r\n\r\n\r\n\r\n\r\n\r\n\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('/', function () {\r\n  $('#root').load('./partials/home.html', _controllers_homeController__WEBPACK_IMPORTED_MODULE_1__[\"default\"])\r\n})\r\n\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('#/people', function () {\r\n  $('#root').load('./partials/people.html', _controllers_peopleController__WEBPACK_IMPORTED_MODULE_2__[\"default\"])\r\n})\r\n\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('#/local-storage', function () {\r\n  $('#root').load('./partials/local-storage.html', _controllers_lsController__WEBPACK_IMPORTED_MODULE_4__[\"default\"])\r\n})\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.addRoute('#/contact', function () {\r\n  $('#root').load('./partials/contact.html', _controllers_contactController__WEBPACK_IMPORTED_MODULE_3__[\"default\"])\r\n})\r\n// En cada cambio del # va a verificar las rutas\r\n$(window).on('hashchange', function () {\r\n  crossroads__WEBPACK_IMPORTED_MODULE_0___default.a.parse(window.location.hash)\r\n})\r\n\r\ncrossroads__WEBPACK_IMPORTED_MODULE_0___default.a.parse(window.location.hash)\r\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/js/router.js?");
+
+/***/ }),
+
+/***/ "./src/js/utils/ajax.js":
+/*!******************************!*\
+  !*** ./src/js/utils/ajax.js ***!
+  \******************************/
+/*! exports provided: getData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getData\", function() { return getData; });\nfunction getData (url, cbk) {\r\n  $.ajax(url)\r\n    .done(function (data) {\r\n      cbk(null, data)\r\n    })\r\n    .fail(function (error) {\r\n      cbk(error)\r\n    })\r\n}\r\n\r\n\r\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/js/utils/ajax.js?");
 
 /***/ }),
 
