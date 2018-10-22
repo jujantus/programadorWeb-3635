@@ -1,11 +1,21 @@
 import { getData } from '../utils/ajax'
 
+import translate from '../utils/translate'
+
+import { searchPeopleIndexByUrl } from '../utils/search'
+
+import { getLocalList, setLocalList } from '../utils/localStorage'
+
 function peopleController () {
   console.log('peopleController successfully loaded')
 
   var tableBodyNode = $('#tableBody')
 
   var seeMoreButton = $('#seeMore')
+
+  var apiResults = []
+
+  var localPeople = getLocalList('peopleList')
 
   getData('https://swapi.co/api/people/', showPeople)
 
@@ -14,6 +24,11 @@ function peopleController () {
     } else {
       var people = data.results
 
+      if (data.results) {
+        apiResults = apiResults.concat(data.results)
+        console.log(apiResults)
+      }
+
       var person
 
       for (var i = 0; i < people.length; i++) {
@@ -21,13 +36,25 @@ function peopleController () {
 
         var url = person.url
 
+        var localIndex = searchPeopleIndexByUrl(person.url, localPeople)
+
+        var deleteButton
+
         url = url.replace('https://swapi.co/api/people/', '')
 
         var id = url.replace('/', '')
 
-        console.log(id)
-
-        console.log(person)
+        if (localIndex == -1) {
+          var addButton =
+            '<td> <button type="button" id = "button' +
+            id +
+            '" class="btn btn-success">Guardar</button></td>'
+        } else {
+          addButton =
+            '<td> <button type="button" id = "button' +
+            id +
+            '" class="btn btn-dark disabled">Guardado</button></td>'
+        }
 
         tableBodyNode.append(
           '<tr id="' +
@@ -44,8 +71,36 @@ function peopleController () {
             translate(person.mass) +
             ' KG</td> <td>' +
             translate(person.eye_color) +
-            '</td> <td> <button type="button" class="btn btn-success">Guardar</button></td> </tr>'
+            '</td> <td> ' +
+            addButton +
+            ' </td> </tr>'
         )
+
+        $('#button' + id).click(function () {
+          var button = $(this)
+
+          console.log('click')
+
+          var buttonId = button.attr('id')
+
+          var id = buttonId.replace('button', '')
+
+          var newUrl = 'https://swapi.co/api/people/' + id + '/'
+
+          var index = searchPeopleIndexByUrl(newUrl, apiResults)
+
+          if (index !== -1) {
+            var personInfo = apiResults[index]
+
+            localPeople.push(personInfo)
+
+            setLocalList('peopleList', localPeople)
+
+            button.html('Guardado')
+            button.removeClass('btn-success')
+            button.addClass('btn-dark disabled')
+          }
+        })
       }
       if (data.next) {
         seeMoreButton.one('click', function () {
@@ -55,67 +110,6 @@ function peopleController () {
         seeMoreButton.remove()
       }
     }
-  }
-}
-
-function translate (word) {
-  switch (word) {
-    case 'male':
-      return 'Masculino'
-      break
-    case 'female':
-      return 'Femenino'
-      break
-    case 'blue':
-      return 'Azul'
-      break
-    case 'yellow':
-      return 'Amarillo'
-      break
-    case 'red':
-      return 'Rojo'
-      break
-    case 'brown':
-      return 'Marron'
-      break
-    case 'black':
-      return 'Negro'
-      break
-    case 'orange':
-      return 'Naranja'
-      break
-    case 'hazel':
-      return 'Avellana'
-      break
-    case 'blue-gray':
-      return 'Azul-gris'
-      break
-    case 'hermaphrodite':
-      return 'Hermafrodita'
-      break
-    case 'unknown':
-      return '???'
-      break
-    case 'white':
-      return 'Blanco'
-      break
-    case 'dark':
-      return 'Oscuro'
-      break
-    case 'pink':
-      return 'Rosa'
-      break
-    case 'green, yellow':
-      return 'Verde-Amarillo'
-      break
-    case 'gold':
-      return 'Dorado'
-      break
-    case 'red, blue':
-      return 'Rojo-Azul'
-      break
-    default:
-      return word
   }
 }
 
